@@ -61,9 +61,9 @@ const DEFAULT_CATEGORIES = [
 ];
 
 const DEFAULT_CONFIG = {
-  projectName: "New Construction Project",
-  ownerName: "Owner",
-  contractorName: "Contractor",
+  projectName: "Baibala House",
+  ownerName: "Chacha",
+  contractorName: "Nasir",
   currency: "Rs",
   categories: DEFAULT_CATEGORIES,
   personnel: [],
