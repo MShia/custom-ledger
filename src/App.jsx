@@ -23,9 +23,9 @@ import seed from "./seed.json";
    browser. Changing these does not overwrite data already saved in a browser.
    =========================================================================== */
 const PROJECT_DEFAULTS = {
-  projectName: "New Construction Project",
-  ownerName: "Owner",
-  contractorName: "Contractor",
+  projectName: "Baibala House",
+  ownerName: "Chacha",
+  contractorName: "Nasir",
   currency: "Rs", // currency symbol, e.g. "Rs", "€", "$", "£", "PKR"
 };
 
