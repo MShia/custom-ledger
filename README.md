@@ -13,6 +13,29 @@ no external file imports.
 
 - Node.js 18 or newer (Node 20+ recommended)
 
+## Setting your project defaults (name, owner, contractor, currency)
+
+Open `src/App.jsx` and edit the **`PROJECT_DEFAULTS`** block near the top of the
+file (around line 25):
+
+```js
+const PROJECT_DEFAULTS = {
+  projectName: "New Construction Project",
+  ownerName: "Owner",
+  contractorName: "Contractor",
+  currency: "Rs",
+};
+```
+
+Change the strings, then rebuild/redeploy. These values show for any new
+visitor whose browser has no saved data yet, so they appear immediately on a
+fresh deployment.
+
+Note: if you've already used the app in your own browser, your saved details
+override these defaults on that browser. To preview the new defaults, use
+**Settings → Reset all data**, open the site in a private/incognito window, or
+clear the site's data.
+
 ## Setup
 
 From this folder:

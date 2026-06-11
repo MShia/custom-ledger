@@ -14,6 +14,21 @@ import {
 } from "docx";
 import seed from "./seed.json";
 
+/* ===========================================================================
+   DEPLOYMENT DEFAULTS  —  EDIT THESE, then rebuild / redeploy.
+   ---------------------------------------------------------------------------
+   These are shown to any new visitor whose browser has no saved data yet,
+   so they appear immediately on a fresh deployment. Once someone edits the
+   details inside the app (Settings), their saved values take over in THEIR
+   browser. Changing these does not overwrite data already saved in a browser.
+   =========================================================================== */
+const PROJECT_DEFAULTS = {
+  projectName: "New Construction Project",
+  ownerName: "Owner",
+  contractorName: "Contractor",
+  currency: "Rs", // currency symbol, e.g. "Rs", "€", "$", "£", "PKR"
+};
+
 /* ----------------------------------------------------------------------------
    Theme
 ---------------------------------------------------------------------------- */
@@ -61,10 +76,7 @@ const DEFAULT_CATEGORIES = [
 ];
 
 const DEFAULT_CONFIG = {
-  projectName: "Baibala House",
-  ownerName: "Chacha",
-  contractorName: "Nasir",
-  currency: "Rs",
+  ...PROJECT_DEFAULTS,
   categories: DEFAULT_CATEGORIES,
   personnel: [],
 };
@@ -445,21 +457,21 @@ function Overview({ config, payments, expenses, totals, fmt, setTab }) {
             : (
               <div className="flex flex-col">
                 {recent.map((r) => (
-                  <div key={r.id} className="flex items-center justify-between py-2.5" style={{ borderBottom: `1px solid ${T.line}` }}>
-                    <div className="flex items-center gap-3 min-w-0">
-                      <div className="rounded-lg flex items-center justify-center flex-shrink-0" style={{ width: 30, height: 30, background: r._type === "payment" ? T.blueSoft : T.accentSoft }}>
+                  <div key={r.id} className="flex items-start justify-between gap-2 py-2.5" style={{ borderBottom: `1px solid ${T.line}` }}>
+                    <div className="flex items-start gap-3 min-w-0">
+                      <div className="rounded-lg flex items-center justify-center flex-shrink-0" style={{ width: 30, height: 30, marginTop: 1, background: r._type === "payment" ? T.blueSoft : T.accentSoft }}>
                         {r._type === "payment" ? <Wallet size={15} style={{ color: T.blue }} /> : <Receipt size={15} style={{ color: T.accent }} />}
                       </div>
                       <div className="min-w-0">
-                        <div className="text-sm font-medium truncate" style={{ color: T.ink }}>
+                        <div className="text-sm font-medium" style={{ color: T.ink, overflowWrap: "anywhere" }}>
                           {r._type === "payment" ? "Payment from owner" : (r.category + (r.subcategory ? ` · ${r.subcategory}` : ""))}
                         </div>
-                        <div className="text-xs truncate" style={{ color: T.faint }}>
+                        <div className="text-xs" style={{ color: T.faint, overflowWrap: "anywhere" }}>
                           {fmtDate(r.date)}{r.person ? ` · ${r.person}` : ""}{r.note ? ` · ${r.note}` : ""}{r.description ? ` · ${r.description}` : ""}
                         </div>
                       </div>
                     </div>
-                    <div className="text-sm font-semibold tabular-nums flex-shrink-0 ml-2" style={{ color: r._type === "payment" ? T.blue : T.ink }}>
+                    <div className="text-sm font-semibold tabular-nums flex-shrink-0" style={{ color: r._type === "payment" ? T.blue : T.ink, paddingTop: 1 }}>
                       {r._type === "payment" ? "+" : "−"}{fmt(num(r.amount)).replace("−", "")}
                     </div>
                   </div>
