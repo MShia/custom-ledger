@@ -86,7 +86,10 @@ begins with it already loaded (only when their browser has no saved data yet):
 - Expense entry with construction categories and sub-categories
 - Search and filter expenses by category, person, and text
 - Analytics: spend by category, monthly cash flow, per-person personnel spend
-- Report snapshots saved to an in-app registry, exportable as CSV
+- Report snapshots saved to an in-app registry, exportable as a formatted
+  **Word (.docx)** document or CSV
+- A polished Word report (summary, category and personnel analytics, monthly
+  cash flow, and a full transaction ledger appendix) generated in the browser
 - Full-ledger CSV export and JSON backup
 - Editable project details, categories, personnel, and currency symbol
 
@@ -106,4 +109,4 @@ construction-ledger/
 
 ## Tech
 
-React 19, Vite, Tailwind CSS v4, Recharts, lucide-react.
+React 19, Vite, Tailwind CSS v4, Recharts, lucide-react, docx.

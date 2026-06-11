@@ -6,8 +6,12 @@ import {
 import {
   LayoutDashboard, Wallet, Receipt, BarChart3, FileText, Settings as SettingsIcon,
   Plus, Trash2, Pencil, Download, Search, X, HardHat, TrendingUp, TrendingDown,
-  CircleDollarSign, Check, Building2, Filter, AlertTriangle, Upload,
+  CircleDollarSign, Check, Building2, Filter, AlertTriangle, Upload, FileDown,
 } from "lucide-react";
+import {
+  Document, Packer, Paragraph, TextRun, Table as DocTable, TableRow, TableCell,
+  WidthType, AlignmentType, BorderStyle, ShadingType,
+} from "docx";
 import seed from "./seed.json";
 
 /* ----------------------------------------------------------------------------
@@ -845,23 +849,38 @@ function Reports({ config, payments, expenses, reports, totals, fmt, addReport, 
     downloadCSV(`${slug(r.project)}_report_${new Date(r.createdAt).toISOString().slice(0, 10)}.csv`, rows);
   };
 
+  const meta = { projectName: config.projectName, ownerName: config.ownerName, contractorName: config.contractorName, currency: config.currency };
+  const wordLive = () => generateWordReport({
+    meta, totals,
+    categories: aggregate(expenses, "category"),
+    persons: aggregatePersons(expenses),
+    monthly: buildTrend(payments, expenses),
+    payments, expenses, generatedAt: Date.now(), includeLedger: true,
+  });
+  const wordSnapshot = (r) => generateWordReport({
+    meta: { projectName: r.project, ownerName: r.owner, contractorName: r.contractor, currency: r.currency },
+    totals: r.totals, categories: r.byCategory, persons: r.byPerson,
+    monthly: [], payments: [], expenses: [], generatedAt: r.createdAt, includeLedger: false,
+  });
+
   return (
     <div>
       <PageHead title="Reports"
         subtitle="Generate snapshots from your data and keep a record of every report"
-        actions={<div className="flex gap-2">
-          <Button variant="soft" icon={Download} onClick={exportLedgerCSV}>Export full ledger</Button>
+        actions={<div className="flex gap-2 flex-wrap">
+          <Button variant="soft" icon={Download} onClick={exportLedgerCSV}>Export CSV</Button>
+          <Button variant="soft" icon={FileDown} onClick={wordLive}>Word report</Button>
           <Button variant="accent" icon={FileText} onClick={generate}>Generate report</Button>
         </div>}
       />
 
-      {viewing && <ReportView r={viewing} fmt={makeFmt(viewing.currency)} onClose={() => setViewing(null)} onDownload={() => reportCSV(viewing)} />}
+      {viewing && <ReportView r={viewing} fmt={makeFmt(viewing.currency)} onClose={() => setViewing(null)} onDownloadCSV={() => reportCSV(viewing)} onDownloadWord={() => wordSnapshot(viewing)} />}
 
       <Card>
         <div className="p-4" style={{ borderBottom: `1px solid ${T.line}` }}>
           <SectionTitle icon={FileText}>Generated reports</SectionTitle>
           <p className="text-xs -mt-1" style={{ color: T.faint }}>
-            Each report is a saved snapshot of totals, categories and personnel at the moment it was generated. Open to review or download as CSV.
+            Each report is a saved snapshot of totals, categories and personnel at the moment it was generated. Open to review, or download as a Word document or CSV.
           </p>
         </div>
         {reports.length === 0
@@ -888,6 +907,7 @@ function Reports({ config, payments, expenses, reports, totals, fmt, addReport, 
                         {owed ? "Owed " : "Balance "}{makeFmt(r.currency)(Math.abs(r.totals.balance))}
                       </span>
                       <Button variant="soft" size="sm" onClick={() => setViewing(r)}>Open</Button>
+                      <Button variant="soft" size="sm" icon={FileDown} onClick={() => wordSnapshot(r)}>Word</Button>
                       <Button variant="soft" size="sm" icon={Download} onClick={() => reportCSV(r)}>CSV</Button>
                       {confirmId === r.id
                         ? <ConfirmDelete onConfirm={() => { removeReport(r.id); setConfirmId(null); }} onCancel={() => setConfirmId(null)} />
@@ -903,7 +923,7 @@ function Reports({ config, payments, expenses, reports, totals, fmt, addReport, 
   );
 }
 
-function ReportView({ r, fmt, onClose, onDownload }) {
+function ReportView({ r, fmt, onClose, onDownloadCSV, onDownloadWord }) {
   const owed = r.totals.balance < 0;
   return (
     <Card className="p-5 mb-4" style={{ borderColor: `${T.accent}44` }}>
@@ -913,8 +933,9 @@ function ReportView({ r, fmt, onClose, onDownload }) {
           <h3 className="text-lg font-bold" style={{ color: T.ink }}>{r.project}</h3>
           <p className="text-xs" style={{ color: T.faint }}>{r.owner} → {r.contractor} · Generated {new Date(r.createdAt).toLocaleString("en-GB")}</p>
         </div>
-        <div className="flex gap-2">
-          <Button variant="accent" size="sm" icon={Download} onClick={onDownload}>Download CSV</Button>
+        <div className="flex gap-2 flex-wrap justify-end">
+          <Button variant="accent" size="sm" icon={FileDown} onClick={onDownloadWord}>Word</Button>
+          <Button variant="soft" size="sm" icon={Download} onClick={onDownloadCSV}>CSV</Button>
           <button onClick={onClose} className="p-1.5" style={{ color: T.faint }}><X size={18} /></button>
         </div>
       </div>
@@ -1127,6 +1148,153 @@ function RowActions({ onEdit, onDelete }) {
       <button onClick={onDelete} title="Delete" className="p-1.5" style={{ color: T.faint }}><Trash2 size={14} /></button>
     </div>
   );
+}
+
+/* ----------------------------------------------------------------------------
+   Word (.docx) report
+---------------------------------------------------------------------------- */
+const W = { ink: "1F2933", sub: "5B6B7A", faint: "8A97A3", accent: "B4690E", blue: "2A5D8F", line: "E4E8EC", zebra: "F7F8FA", posSoft: "E7F4EE", negSoft: "FBECEB", pos: "0F7B5A", neg: "B3261E" };
+const wBorder = (() => { const b = { style: BorderStyle.SINGLE, size: 4, color: W.line }; return { top: b, bottom: b, left: b, right: b, insideHorizontal: b, insideVertical: b }; })();
+
+function wCell(text, { bold, align, fill, color, size } = {}) {
+  return new TableCell({
+    shading: fill ? { type: ShadingType.CLEAR, fill, color: "auto" } : undefined,
+    margins: { top: 60, bottom: 60, left: 110, right: 110 },
+    children: [new Paragraph({
+      alignment: align === "right" ? AlignmentType.RIGHT : align === "center" ? AlignmentType.CENTER : AlignmentType.LEFT,
+      children: [new TextRun({ text: String(text), bold: !!bold, color: color || W.ink, size: size || 18 })],
+    })],
+  });
+}
+function wTable(headers, rows) {
+  const headerRow = new TableRow({
+    tableHeader: true,
+    children: headers.map((h) => wCell(h.text, { bold: true, align: h.align, fill: W.ink, color: "FFFFFF" })),
+  });
+  const bodyRows = rows.map((cells, i) =>
+    new TableRow({ children: cells.map((c) => wCell(c.text, { ...c, fill: c.fill || (i % 2 ? W.zebra : undefined) })) }));
+  return new DocTable({
+    width: { size: 100, type: WidthType.PERCENTAGE },
+    columnWidths: headers.map((h) => Math.round((h.w || (100 / headers.length)) * 96)),
+    borders: wBorder,
+    rows: [headerRow, ...bodyRows],
+  });
+}
+function wHeading(text) {
+  return new Paragraph({ spacing: { before: 300, after: 130 }, border: { bottom: { style: BorderStyle.SINGLE, size: 8, color: W.accent } }, children: [new TextRun({ text, bold: true, size: 24, color: W.accent })] });
+}
+function wPara(runs, opts = {}) { return new Paragraph({ spacing: opts.spacing, alignment: opts.align, children: runs }); }
+function wSpacer(after = 120) { return new Paragraph({ spacing: { after }, children: [] }); }
+
+function generateWordReport(payload) {
+  const { meta, totals, categories, persons, monthly, payments, expenses, generatedAt, includeLedger } = payload;
+  const fmt = makeFmt(meta.currency);
+  const owed = totals.balance < 0;
+  const spent = totals.spent || 0;
+  const dateStr = new Date(generatedAt || Date.now()).toLocaleString("en-GB", { day: "2-digit", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit" });
+
+  const children = [];
+
+  // Title block
+  children.push(new Paragraph({ children: [new TextRun({ text: meta.projectName || "Project", bold: true, size: 44, color: W.ink })] }));
+  children.push(new Paragraph({ spacing: { after: 40 }, children: [new TextRun({ text: "Construction Project — Finance & Analytics Report", size: 24, color: W.sub })] }));
+  children.push(new Paragraph({ spacing: { after: 60 }, children: [new TextRun({ text: `${meta.ownerName} (Owner)  \u2192  ${meta.contractorName} (Contractor)`, size: 19, color: W.sub })] }));
+  children.push(new Paragraph({ spacing: { after: 200 }, children: [new TextRun({ text: `Generated ${dateStr}`, size: 17, color: W.faint, italics: true })] }));
+
+  // Financial summary
+  children.push(wHeading("Financial Summary"));
+  children.push(wTable(
+    [{ text: "Metric", w: 60 }, { text: `Amount (${meta.currency})`, align: "right", w: 40 }],
+    [
+      [{ text: "Total received from owner" }, { text: fmt(totals.received), align: "right", bold: true }],
+      [{ text: "Total spent by contractor" }, { text: fmt(totals.spent), align: "right", bold: true }],
+      [{ text: owed ? `Amount owed to ${meta.contractorName}` : `Balance held by ${meta.contractorName}`, bold: true, fill: owed ? W.negSoft : W.posSoft, color: owed ? W.neg : W.pos },
+       { text: fmt(Math.abs(totals.balance)), align: "right", bold: true, fill: owed ? W.negSoft : W.posSoft, color: owed ? W.neg : W.pos }],
+    ]
+  ));
+  children.push(wPara([new TextRun({ text: owed
+    ? `The contractor has spent more on the project than received and is owed ${fmt(Math.abs(totals.balance))}.`
+    : `Unspent funds of ${fmt(totals.balance)} remain with the contractor. Funds utilised: ${totals.received > 0 ? Math.round((spent / totals.received) * 100) : 0}% of payments received.`,
+    size: 17, color: W.sub, italics: true })], { spacing: { before: 100, after: 80 } }));
+
+  // Category analytics
+  children.push(wHeading("Expenditure by Category"));
+  if (!categories.length) {
+    children.push(wPara([new TextRun({ text: "No expenses recorded.", size: 18, color: W.faint })]));
+  } else {
+    const rows = categories.map((c) => [
+      { text: c.key }, { text: fmt(c.value), align: "right" },
+      { text: spent > 0 ? Math.round((c.value / spent) * 100) + "%" : "\u2014", align: "right" },
+    ]);
+    rows.push([{ text: "Total", bold: true, fill: W.zebra }, { text: fmt(spent), align: "right", bold: true, fill: W.zebra }, { text: "100%", align: "right", bold: true, fill: W.zebra }]);
+    children.push(wTable([{ text: "Category", w: 56 }, { text: `Amount (${meta.currency})`, align: "right", w: 30 }, { text: "Share", align: "right", w: 14 }], rows));
+  }
+
+  // Personnel analytics
+  children.push(wHeading("Personnel Expenditure"));
+  if (!persons.length) {
+    children.push(wPara([new TextRun({ text: "No personnel-tagged expenses recorded.", size: 18, color: W.faint })]));
+  } else {
+    const ptotal = persons.reduce((s, p) => s + p.value, 0);
+    const rows = persons.map((p) => [
+      { text: p.key }, { text: fmt(p.value), align: "right" },
+      { text: ptotal > 0 ? Math.round((p.value / ptotal) * 100) + "%" : "\u2014", align: "right" },
+    ]);
+    rows.push([{ text: "Total", bold: true, fill: W.zebra }, { text: fmt(ptotal), align: "right", bold: true, fill: W.zebra }, { text: "100%", align: "right", bold: true, fill: W.zebra }]);
+    children.push(wTable([{ text: "Person / Worker", w: 56 }, { text: `Amount (${meta.currency})`, align: "right", w: 30 }, { text: "Share", align: "right", w: 14 }], rows));
+  }
+
+  // Monthly cash flow
+  if (monthly && monthly.length) {
+    children.push(wHeading("Monthly Cash Flow"));
+    const rows = monthly.map((m) => [
+      { text: m.label }, { text: fmt(m.received), align: "right" }, { text: fmt(m.spent), align: "right" }, { text: fmt(m.balance), align: "right" },
+    ]);
+    children.push(wTable(
+      [{ text: "Month", w: 28 }, { text: "Received", align: "right", w: 24 }, { text: "Spent", align: "right", w: 24 }, { text: "Running balance", align: "right", w: 24 }],
+      rows
+    ));
+  }
+
+  // Ledger appendix
+  if (includeLedger) {
+    if (payments && payments.length) {
+      children.push(wHeading("Appendix \u2014 Owner Payments"));
+      const rows = [...payments].sort((a, b) => (a.date || "").localeCompare(b.date || "")).map((p) => [
+        { text: fmtDate(p.date) }, { text: p.mode || "\u2014" }, { text: p.note || "\u2014" }, { text: fmt(num(p.amount)), align: "right" },
+      ]);
+      children.push(wTable([{ text: "Date", w: 20 }, { text: "Method", w: 22 }, { text: "Reference", w: 36 }, { text: `Amount (${meta.currency})`, align: "right", w: 22 }], rows));
+    }
+    if (expenses && expenses.length) {
+      children.push(wHeading("Appendix \u2014 Expenses"));
+      const rows = [...expenses].sort((a, b) => (a.date || "").localeCompare(b.date || "")).map((e) => [
+        { text: fmtDate(e.date) },
+        { text: e.category + (e.subcategory ? ` \u00b7 ${e.subcategory}` : "") },
+        { text: [e.person, e.vendor].filter(Boolean).join(" \u00b7 ") || "\u2014" },
+        { text: fmt(num(e.amount)), align: "right" },
+      ]);
+      children.push(wTable([{ text: "Date", w: 16 }, { text: "Category", w: 34 }, { text: "Person / Vendor", w: 28 }, { text: `Amount (${meta.currency})`, align: "right", w: 22 }], rows));
+    }
+  }
+
+  children.push(wSpacer(200));
+  children.push(wPara([new TextRun({ text: "Generated by the Construction Project Finance Ledger.", size: 15, color: W.faint, italics: true })], { align: AlignmentType.CENTER }));
+
+  const doc = new Document({
+    styles: { default: { document: { run: { font: "Calibri" } } } },
+    sections: [{ properties: { page: { margin: { top: 720, bottom: 720, left: 720, right: 720 } } }, children }],
+  });
+
+  Packer.toBlob(doc).then((blob) => {
+    downloadBlob(`${slug(meta.projectName)}_report_${new Date(generatedAt || Date.now()).toISOString().slice(0, 10)}.docx`, blob);
+  });
+}
+
+function downloadBlob(filename, blob) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = filename; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1500);
 }
 
 /* ----------------------------------------------------------------------------
