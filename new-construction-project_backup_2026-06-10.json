@@ -1,0 +1,665 @@
+{
+  "config": {
+    "projectName": "New Construction Project",
+    "ownerName": "Owner",
+    "contractorName": "Contractor",
+    "currency": "Rs",
+    "categories": [
+      {
+        "name": "Labour / Personnel",
+        "subs": [
+          "Mason",
+          "Helper / Labourer",
+          "Supervisor",
+          "Electrician",
+          "Plumber",
+          "Painter",
+          "Carpenter",
+          "Steel Fixer",
+          "Tiler"
+        ]
+      },
+      {
+        "name": "Cement",
+        "subs": []
+      },
+      {
+        "name": "Steel / Rebar",
+        "subs": []
+      },
+      {
+        "name": "Bricks / Blocks",
+        "subs": []
+      },
+      {
+        "name": "Sand / Aggregate",
+        "subs": []
+      },
+      {
+        "name": "Materials (General)",
+        "subs": []
+      },
+      {
+        "name": "Sanitary",
+        "subs": [
+          "Fittings",
+          "Pipes",
+          "Fixtures"
+        ]
+      },
+      {
+        "name": "Plumbing",
+        "subs": []
+      },
+      {
+        "name": "Roofing",
+        "subs": []
+      },
+      {
+        "name": "Flooring",
+        "subs": []
+      },
+      {
+        "name": "Tiles / Marble",
+        "subs": []
+      },
+      {
+        "name": "Kitchen",
+        "subs": [
+          "Cabinets",
+          "Countertop",
+          "Fittings"
+        ]
+      },
+      {
+        "name": "Electrical",
+        "subs": [
+          "Wiring",
+          "Fixtures",
+          "DB / Breakers"
+        ]
+      },
+      {
+        "name": "Paint",
+        "subs": []
+      },
+      {
+        "name": "Woodwork / Carpentry",
+        "subs": [
+          "Doors",
+          "Windows",
+          "Wardrobes"
+        ]
+      },
+      {
+        "name": "Glass / Aluminium",
+        "subs": []
+      },
+      {
+        "name": "Plaster / POP",
+        "subs": []
+      },
+      {
+        "name": "Excavation / Earthwork",
+        "subs": []
+      },
+      {
+        "name": "Foundation / RCC",
+        "subs": []
+      },
+      {
+        "name": "Waterproofing",
+        "subs": []
+      },
+      {
+        "name": "Boundary Wall",
+        "subs": []
+      },
+      {
+        "name": "Transport / Freight",
+        "subs": []
+      },
+      {
+        "name": "Equipment Rental",
+        "subs": []
+      },
+      {
+        "name": "Permits / Fees",
+        "subs": []
+      },
+      {
+        "name": "Miscellaneous",
+        "subs": []
+      }
+    ],
+    "personnel": []
+  },
+  "payments": [
+    {
+      "date": "2026-05-23",
+      "amount": 500000,
+      "mode": "Online",
+      "note": "online payment",
+      "id": "57caf9ee-0957-47a9-83e1-4ce4dbaf6448",
+      "createdAt": 1781134020776
+    },
+    {
+      "date": "2026-06-08",
+      "amount": 500000,
+      "mode": "Online",
+      "note": "online post payment ",
+      "id": "4ddc8a43-5fb9-4298-b91a-fdf893f073d7",
+      "createdAt": 1781133962223
+    },
+    {
+      "date": "2026-05-21",
+      "amount": 250000,
+      "mode": "Online",
+      "note": "online",
+      "id": "c405e236-7336-490b-a167-99eb8f4a1a8a",
+      "createdAt": 1781132925931
+    },
+    {
+      "date": "2026-05-15",
+      "amount": 100000,
+      "mode": "Cash",
+      "note": "cash ",
+      "id": "78e04e7b-0745-4dc9-bf48-c5399cf182a9",
+      "createdAt": 1781132893056
+    },
+    {
+      "date": "2026-05-14",
+      "amount": 80000,
+      "mode": "Cash",
+      "note": "cash ",
+      "id": "831a107d-fd71-4972-ac42-86177fa56d39",
+      "createdAt": 1781132381116
+    },
+    {
+      "date": "2026-05-03",
+      "amount": 50000,
+      "mode": "Cash",
+      "note": "cash post lenter",
+      "id": "13d77987-6c94-42af-8240-de573c32584d",
+      "createdAt": 1781132351027
+    }
+  ],
+  "expenses": [
+    {
+      "date": "2026-06-07",
+      "category": "Labour / Personnel",
+      "subcategory": "Mason",
+      "amount": 2000,
+      "person": "Chinar ",
+      "vendor": "",
+      "mode": "Cash",
+      "description": "Chinar mistri sauda waqas ",
+      "id": "f9bbc388-9222-457e-9c8b-c621fd53c428",
+      "createdAt": 1781133938136
+    },
+    {
+      "date": "2026-06-07",
+      "category": "Sanitary",
+      "subcategory": "Fittings",
+      "amount": 280000,
+      "person": "",
+      "vendor": "",
+      "mode": "Cash",
+      "description": "Saeed Gujranwala",
+      "id": "f543a0d7-29dd-49e6-b13c-dcf3c90f14ea",
+      "createdAt": 1781133899418
+    },
+    {
+      "date": "2026-06-07",
+      "category": "Steel / Rebar",
+      "subcategory": "",
+      "amount": 182470,
+      "person": "",
+      "vendor": "",
+      "mode": "Cash",
+      "description": "Alhadeed sarya - top floor",
+      "id": "5685fd19-93ee-4925-b99d-7cb75a0254ae",
+      "createdAt": 1781133860794
+    },
+    {
+      "date": "2026-06-07",
+      "category": "Transport / Freight",
+      "subcategory": "",
+      "amount": 4000,
+      "person": "",
+      "vendor": "",
+      "mode": "Cash",
+      "description": "Suzuki karaya",
+      "id": "d07c718d-b404-41f6-af14-1e1ac390184f",
+      "createdAt": 1781133811392
+    },
+    {
+      "date": "2026-06-07",
+      "category": "Tiles / Marble",
+      "subcategory": "",
+      "amount": 97000,
+      "person": "",
+      "vendor": "Asia",
+      "mode": "Cash",
+      "description": "Tiles / Asia",
+      "id": "4a6f090f-943c-4197-a5db-715b0752a600",
+      "createdAt": 1781133768719
+    },
+    {
+      "date": "2026-06-07",
+      "category": "Labour / Personnel",
+      "subcategory": "Mason",
+      "amount": 15000,
+      "person": "Chinar ",
+      "vendor": "",
+      "mode": "Online",
+      "description": "chinal mistri online",
+      "id": "450ad01d-3125-4b24-9458-4608a17b9cab",
+      "createdAt": 1781133735237
+    },
+    {
+      "date": "2026-06-04",
+      "category": "Miscellaneous",
+      "subcategory": "",
+      "amount": 13000,
+      "person": "",
+      "vendor": "",
+      "mode": "Cash",
+      "description": "writing not clear ",
+      "id": "3950fbcc-0242-45f0-ba2c-ff5bc80d44a9",
+      "createdAt": 1781133700971
+    },
+    {
+      "date": "2026-06-04",
+      "category": "Plumbing",
+      "subcategory": "Pipes",
+      "amount": 40000,
+      "person": "",
+      "vendor": "",
+      "mode": "Cash",
+      "description": "PPR",
+      "id": "343fed8d-8a7f-4091-8498-2b05029fbcaf",
+      "createdAt": 1781133663688
+    },
+    {
+      "date": "2026-06-02",
+      "category": "Woodwork / Carpentry",
+      "subcategory": "Doors",
+      "amount": 7000,
+      "person": "Asad Shah",
+      "vendor": "",
+      "mode": "Cash",
+      "description": "Remaining ",
+      "id": "242edc96-1f57-41e5-b175-5165e0818223",
+      "createdAt": 1781133640808
+    },
+    {
+      "date": "2026-06-01",
+      "category": "Electrical",
+      "subcategory": "Wiring",
+      "amount": 1000,
+      "person": "",
+      "vendor": "",
+      "mode": "Cash",
+      "description": "Bijli taar ",
+      "id": "18624661-6f1e-45bc-9e41-600262b7506e",
+      "createdAt": 1781133598278
+    },
+    {
+      "date": "2026-05-25",
+      "category": "Labour / Personnel",
+      "subcategory": "Helper / Labourer",
+      "amount": 5000,
+      "person": "Hameedullah",
+      "vendor": "",
+      "mode": "Cash",
+      "description": "Hameedullah mazduri",
+      "id": "710a0ed8-5ee1-41f4-8865-37759d562a90",
+      "createdAt": 1781133568646
+    },
+    {
+      "date": "2026-05-25",
+      "category": "Labour / Personnel",
+      "subcategory": "Mason",
+      "amount": 10000,
+      "person": "Chinar / Shah Khan",
+      "vendor": "",
+      "mode": "Online",
+      "description": "plaster ",
+      "id": "1172cbc3-a2f1-4d48-92f3-92d02613b036",
+      "createdAt": 1781133523780
+    },
+    {
+      "date": "2026-05-24",
+      "category": "Materials (General)",
+      "subcategory": "",
+      "amount": 850,
+      "person": "",
+      "vendor": "",
+      "mode": "Cash",
+      "description": "plastic sheet , nails (keel)",
+      "id": "9abb893e-0e8d-4a02-842b-c9ef029fbf8a",
+      "createdAt": 1781133471713
+    },
+    {
+      "date": "2026-05-24",
+      "category": "Labour / Personnel",
+      "subcategory": "Helper / Labourer",
+      "amount": 5000,
+      "person": "Hameedullah",
+      "vendor": "",
+      "mode": "Cash",
+      "description": "Hameedullah mazduri",
+      "id": "da6f6487-b48f-49e8-acc4-ae05edfa01bc",
+      "createdAt": 1781133426400
+    },
+    {
+      "date": "2026-05-24",
+      "category": "Labour / Personnel",
+      "subcategory": "",
+      "amount": 5000,
+      "person": "",
+      "vendor": "",
+      "mode": "Cash",
+      "description": "Septic Tank Bharai",
+      "id": "6723c7e6-0080-410d-9451-2d56bd6208eb",
+      "createdAt": 1781133401259
+    },
+    {
+      "date": "2026-05-24",
+      "category": "Labour / Personnel",
+      "subcategory": "Mason",
+      "amount": 20000,
+      "person": "Wajid",
+      "vendor": "",
+      "mode": "Cash",
+      "description": "Wajid mistri",
+      "id": "13178b00-4fa2-43c5-a7b2-e0b750a3fc47",
+      "createdAt": 1781133367073
+    },
+    {
+      "date": "2026-05-24",
+      "category": "Labour / Personnel",
+      "subcategory": "Mason",
+      "amount": 30000,
+      "person": "Chinar ",
+      "vendor": "",
+      "mode": "Cash",
+      "description": "Chinar Mistri - plaster",
+      "id": "2eeddaa0-0fd3-45ee-8612-6e92722fef50",
+      "createdAt": 1781133335064
+    },
+    {
+      "date": "2026-05-23",
+      "category": "Cement",
+      "subcategory": "Plaster",
+      "amount": 312000,
+      "person": "",
+      "vendor": "Alhadeed",
+      "mode": "Cash",
+      "description": "Alhadeed Cement bakaya",
+      "id": "1c3a6ff0-ba77-4f72-843b-d1948748debc",
+      "createdAt": 1781133300870
+    },
+    {
+      "date": "2026-05-23",
+      "category": "Materials (General)",
+      "subcategory": "Gate ",
+      "amount": 4000,
+      "person": "",
+      "vendor": "",
+      "mode": "Cash",
+      "description": "Gate lock - tukri",
+      "id": "eac76359-37f1-4997-aa4d-0261785f3a2f",
+      "createdAt": 1781133251077
+    },
+    {
+      "date": "2026-05-23",
+      "category": "Labour / Personnel",
+      "subcategory": "Helper / Labourer",
+      "amount": 10000,
+      "person": "",
+      "vendor": "",
+      "mode": "Cash",
+      "description": "Septic Tank khudai mazdoori ",
+      "id": "6e8b7df4-124c-4db3-b9d2-e2b2f6cec0eb",
+      "createdAt": 1781133191244
+    },
+    {
+      "date": "2026-05-23",
+      "category": "Transport / Freight",
+      "subcategory": "",
+      "amount": 7500,
+      "person": "",
+      "vendor": "",
+      "mode": "Cash",
+      "description": "karaya 5 Trip",
+      "id": "b18c8f5e-062c-43cf-ac8d-bedf82043b32",
+      "createdAt": 1781133102290
+    },
+    {
+      "date": "2026-05-23",
+      "category": "Bricks / Blocks",
+      "subcategory": "",
+      "amount": 83750,
+      "person": "Nauman",
+      "vendor": "",
+      "mode": "Cash",
+      "description": "Nauman  Blocks",
+      "id": "3d3ec2c1-6214-485f-8d08-9fc9255a9eee",
+      "createdAt": 1781133053282
+    },
+    {
+      "date": "2026-05-22",
+      "category": "Cement",
+      "subcategory": "",
+      "amount": 58000,
+      "person": "",
+      "vendor": "",
+      "mode": "Cash",
+      "description": "Ayaz cement ",
+      "id": "589f16fe-8fac-4bd0-8a04-5e18187be758",
+      "createdAt": 1781133012813
+    },
+    {
+      "date": "2026-05-22",
+      "category": "Cement",
+      "subcategory": "",
+      "amount": 11950,
+      "person": "",
+      "vendor": "",
+      "mode": "Cash",
+      "description": "Sherazam cement bill",
+      "id": "2d6a60ae-e902-4236-b70d-26672024d703",
+      "createdAt": 1781132973478
+    },
+    {
+      "date": "2026-05-14",
+      "category": "Labour / Personnel",
+      "subcategory": "Helper / Labourer",
+      "amount": 10000,
+      "person": "Hameedullah",
+      "vendor": "",
+      "mode": "Cash",
+      "description": "hameedullah mazduri",
+      "id": "dd6fe260-7d45-4601-abc0-efda68d80684",
+      "createdAt": 1781132845422
+    },
+    {
+      "date": "2026-05-14",
+      "category": "Materials (General)",
+      "subcategory": "Paint",
+      "amount": 8100,
+      "person": "",
+      "vendor": "",
+      "mode": "Cash",
+      "description": "Gate Color",
+      "id": "e87ec928-af7c-4a05-a1cc-067a7e9a1356",
+      "createdAt": 1781132798721
+    },
+    {
+      "date": "2026-05-14",
+      "category": "Labour / Personnel",
+      "subcategory": "Steel Fixer",
+      "amount": 15500,
+      "person": "Unnamed",
+      "vendor": "",
+      "mode": "Cash",
+      "description": "Gate mazduri",
+      "id": "74da4c1d-4c99-40e0-ab0b-a17fd968335b",
+      "createdAt": 1781132769209
+    },
+    {
+      "date": "2026-05-03",
+      "category": "Materials (General)",
+      "subcategory": "Electrical",
+      "amount": 1880,
+      "person": "Rasheed",
+      "vendor": "",
+      "mode": "Cash",
+      "description": "Rasheed Mistri - cutter",
+      "id": "09a77df4-b16a-4187-a99b-f627916af1ba",
+      "createdAt": 1781132702770
+    },
+    {
+      "date": "2026-05-03",
+      "category": "Labour / Personnel",
+      "subcategory": "Mason",
+      "amount": 20000,
+      "person": "Chinar ",
+      "vendor": "",
+      "mode": "Cash",
+      "description": "Chinar mistri - plaster",
+      "id": "43d586b7-8aa3-45bc-b20d-e52409a41766",
+      "createdAt": 1781132605098
+    },
+    {
+      "date": "2026-05-03",
+      "category": "Woodwork / Carpentry",
+      "subcategory": "Doors",
+      "amount": 120000,
+      "person": "Asad Shah",
+      "vendor": "",
+      "mode": "Cash",
+      "description": "Chaukat ",
+      "id": "0b431aa8-c3f0-4bb6-93e4-e03215d11d61",
+      "createdAt": 1781132505082
+    },
+    {
+      "date": "2026-05-03",
+      "category": "Materials (General)",
+      "subcategory": "",
+      "amount": 27000,
+      "person": "",
+      "vendor": "",
+      "mode": "Cash",
+      "description": "plastar rait ",
+      "id": "d0720c6e-08de-4c73-abdb-3dd4259d9b7b",
+      "createdAt": 1781132457676
+    }
+  ],
+  "reports": [
+    {
+      "id": "2c11731b-edc0-4233-b420-4f89917244d9",
+      "createdAt": 1781134129326,
+      "title": "Project Report — 11 Jun 2026, 00:28",
+      "project": "New Construction Project",
+      "owner": "Owner",
+      "contractor": "Contractor",
+      "currency": "Rs",
+      "totals": {
+        "received": 1480000,
+        "spent": 1407000,
+        "balance": 73000
+      },
+      "counts": {
+        "payments": 6,
+        "expenses": 31
+      },
+      "byCategory": [
+        {
+          "key": "Cement",
+          "value": 381950
+        },
+        {
+          "key": "Sanitary",
+          "value": 280000
+        },
+        {
+          "key": "Steel / Rebar",
+          "value": 182470
+        },
+        {
+          "key": "Labour / Personnel",
+          "value": 147500
+        },
+        {
+          "key": "Woodwork / Carpentry",
+          "value": 127000
+        },
+        {
+          "key": "Tiles / Marble",
+          "value": 97000
+        },
+        {
+          "key": "Bricks / Blocks",
+          "value": 83750
+        },
+        {
+          "key": "Materials (General)",
+          "value": 41830
+        },
+        {
+          "key": "Plumbing",
+          "value": 40000
+        },
+        {
+          "key": "Miscellaneous",
+          "value": 13000
+        },
+        {
+          "key": "Transport / Freight",
+          "value": 11500
+        },
+        {
+          "key": "Electrical",
+          "value": 1000
+        }
+      ],
+      "byPerson": [
+        {
+          "key": "Asad Shah",
+          "value": 127000
+        },
+        {
+          "key": "Nauman",
+          "value": 83750
+        },
+        {
+          "key": "Chinar ",
+          "value": 67000
+        },
+        {
+          "key": "Hameedullah",
+          "value": 20000
+        },
+        {
+          "key": "Wajid",
+          "value": 20000
+        },
+        {
+          "key": "Unnamed",
+          "value": 15500
+        },
+        {
+          "key": "Chinar / Shah Khan",
+          "value": 10000
+        },
+        {
+          "key": "Rasheed",
+          "value": 1880
+        }
+      ]
+    }
+  ]
+}
