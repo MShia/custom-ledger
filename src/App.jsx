@@ -6,7 +6,7 @@ import {
 import {
   LayoutDashboard, Wallet, Receipt, BarChart3, FileText, Settings as SettingsIcon,
   Plus, Trash2, Pencil, Download, Search, X, HardHat, TrendingUp, TrendingDown,
-  CircleDollarSign, Check, Building2, Filter, AlertTriangle, Upload, FileDown,
+  CircleDollarSign, Check, Building2, Filter, AlertTriangle, Upload, FileDown, Menu,
 } from "lucide-react";
 import {
   Document, Packer, Paragraph, TextRun, Table as DocTable, TableRow, TableCell,
@@ -208,6 +208,7 @@ export default function App() {
   const [data, setData] = useState(EMPTY);
   const [loaded, setLoaded] = useState(false);
   const [tab, setTab] = useState("overview");
+  const [mobileNav, setMobileNav] = useState(false);
   const firstSave = useRef(true);
 
   useEffect(() => {
@@ -288,14 +289,37 @@ export default function App() {
 
         {/* Main */}
         <main className="flex-1 min-w-0 flex flex-col">
-          {/* Mobile tab bar */}
-          <div className="sm:hidden flex gap-1 p-2 overflow-x-auto" style={{ background: "#fff", borderBottom: `1px solid ${T.line}` }}>
-            {NAV.map((n) => (
-              <button key={n.id} onClick={() => setTab(n.id)} className="flex items-center gap-1.5 rounded-lg text-xs font-medium"
-                style={{ padding: "7px 10px", whiteSpace: "nowrap", color: tab === n.id ? T.accent : T.sub, background: tab === n.id ? T.accentSoft : "transparent" }}>
-                <n.icon size={14} />{n.label}
+          {/* Mobile top bar + collapsible menu */}
+          <div className="sm:hidden" style={{ background: "#fff", borderBottom: `1px solid ${T.line}` }}>
+            <div className="flex items-center justify-between p-3">
+              <div className="flex items-center gap-2 min-w-0">
+                <div className="rounded-lg flex items-center justify-center flex-shrink-0" style={{ width: 30, height: 30, background: T.ink }}>
+                  <HardHat size={16} color="#fff" />
+                </div>
+                <span className="text-sm font-bold truncate" style={{ color: T.ink }}>{config.projectName || "Project"}</span>
+              </div>
+              <button onClick={() => setMobileNav((o) => !o)} aria-label="Menu"
+                className="flex items-center gap-2 rounded-lg flex-shrink-0"
+                style={{ padding: "7px 11px", border: `1px solid ${T.line}`, color: T.ink, fontSize: 13, fontWeight: 600, background: mobileNav ? T.accentSoft : "#fff" }}>
+                {(NAV.find((n) => n.id === tab) || NAV[0]).label}
+                {mobileNav ? <X size={16} /> : <Menu size={16} />}
               </button>
-            ))}
+            </div>
+            {mobileNav && (
+              <div className="px-2 pb-2 flex flex-col gap-1">
+                {NAV.map((n) => {
+                  const active = tab === n.id;
+                  return (
+                    <button key={n.id} onClick={() => { setTab(n.id); setMobileNav(false); }}
+                      className="flex items-center gap-3 rounded-lg text-sm font-medium"
+                      style={{ padding: "10px 12px", color: active ? T.ink : T.sub, background: active ? T.accentSoft : "transparent", border: active ? `1px solid ${T.accent}33` : "1px solid transparent" }}>
+                      <n.icon size={17} style={{ color: active ? T.accent : T.faint }} />
+                      {n.label}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
           </div>
 
           <div className="p-4 sm:p-6 flex-1">
